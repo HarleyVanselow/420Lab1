@@ -1,0 +1,9 @@
+# 420Lab1
+ECE 420 Lab 1
+
+## Compiling
+gcc -g -Wall -o main main.c lab1_IO.c -lpthread
+
+## Members
+Harley Vanselow
+Dannick Pomerleau

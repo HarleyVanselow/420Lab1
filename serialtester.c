@@ -60,7 +60,7 @@ int main (int argc, char* argv[])
     else
         printf("The result is wrong.\n");
 
-    for (i = 0; i <=n; i++)
+    for (i = 0; i < n; i++)
     {
         free(A[i]); free(B[i]); free(C[i]);
     }

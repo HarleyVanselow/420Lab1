@@ -13,7 +13,7 @@
  * Output:
  *     y: the product vector
  *
- * Compile:  gcc -g -Wall -o pth_mat_mat main.c lab1_IO.c -lpthread
+ * Compile:  gcc -g -Wall -std=c11 -o main main.c lab1_IO.c -lpthread -lm
  * Usage:
  *     pth_mat_mat <thread_count>
  *
@@ -33,9 +33,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <math.h>
 #include "lab1_IO.h"
 #include "timer.h"
-
 
 int n, thread_count;
 int **A; int**B; int** C;
@@ -106,14 +106,17 @@ void Usage (char* prog_name) {
  * Global out var: y
  */
 void *Pth_mat_mat(void* rank) {
-    long my_rank = (long) rank;
+    long k = (long) rank;
+    double d_threads = (double)thread_count;
+    double sqrt_threads = sqrt(d_threads);
     int i, j;
-    int local_n = n/thread_count; 
-    int init_row = 0;
-    int final_row = n;
-    int init_col = 0;
-    int final_col = n;
-
+    int x = floor(k/sqrt_threads);
+    int y = fmod(k,sqrt_threads);
+     
+    int init_row = n*x/sqrt_threads;
+    int final_row = n*(x+1)/sqrt_threads ;
+    int init_col = n*y/sqrt_threads;
+    int final_col = n*(y+1)/sqrt_threads ;
     for (i = init_row; i < final_row; i++) {
         for (j = init_col; j < final_col; j++){
             calculate_cell(i, j);
